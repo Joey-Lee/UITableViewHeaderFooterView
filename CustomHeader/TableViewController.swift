@@ -9,7 +9,8 @@
 import UIKit
 
 struct Constants {
-    static let tableSectionHeaderIdentifier = "TableSectionHeaderView"
+    static let tableSectionHeaderIdentifier1 = "TableSectionHeaderViewIdentifier1"
+    static let tableSectionHeaderIdentifier2 = "TableSectionHeaderViewIdentifier2"
     static let tableViewCellIdentifier = "TableViewCell"
 }
 
@@ -20,18 +21,28 @@ class TableViewController: UITableViewController {
     // MARK: - View life cycle
     
     override func viewDidLoad() {
-        // Register TableSectionHeaderView
-        let nib = UINib(nibName: Constants.tableSectionHeaderIdentifier, bundle: nil)
-        tableView.register(nib, forHeaderFooterViewReuseIdentifier: Constants.tableSectionHeaderIdentifier)
+        // Register section header views
+        let nib = UINib(nibName: "TableSectionHeaderView", bundle: nil)
+        tableView.register(nib, forHeaderFooterViewReuseIdentifier: Constants.tableSectionHeaderIdentifier1)
+        tableView.register(nib, forHeaderFooterViewReuseIdentifier: Constants.tableSectionHeaderIdentifier2)
     }
 
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // Documentation: This method only works correctly when `tableView(_:heightForHeaderInSection:)` is also implemented
-        let sectionHeaderView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: Constants.tableSectionHeaderIdentifier) as! TableSectionHeaderView
-        sectionHeaderView.titleLabel.text = "Section \(section)"
-        return sectionHeaderView
+        switch section {
+        case let value where value % 2 == 0:
+            let sectionHeaderView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: Constants.tableSectionHeaderIdentifier2) as! TableSectionHeaderView
+            sectionHeaderView.titleLabel.text = "Section \(section)"
+            sectionHeaderView.contentView.backgroundColor = .red
+            return sectionHeaderView
+        default:
+            let sectionHeaderView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: Constants.tableSectionHeaderIdentifier1) as! TableSectionHeaderView
+            sectionHeaderView.titleLabel.text = "Section \(section)"
+            sectionHeaderView.contentView.backgroundColor = .blue
+            return sectionHeaderView
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -63,6 +74,10 @@ class TableViewController: UITableViewController {
 */
 class TableSectionHeaderView: UITableViewHeaderFooterView {
     
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel! {
+        didSet {
+            titleLabel.textColor = .white
+        }
+    }
     
 }

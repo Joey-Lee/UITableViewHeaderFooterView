@@ -26,7 +26,6 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="ca9-De-ASq" firstAttribute="leading" secondItem="fSP-gM-QA6" secondAttribute="leadingMargin" id="7MW-RZ-AHk"/>
                         <constraint firstAttribute="trailingMargin" secondItem="ca9-De-ASq" secondAttribute="trailing" id="fIU-An-PHt"/>
